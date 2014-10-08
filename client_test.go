@@ -34,7 +34,9 @@ func setup() {
 
 	// thesrc client configured to use test server
 	client = NewClient(nil)
-	client.Items = &itemService{gopencils.Api(server.URL+"/v0/", ".json")}
+	a := gopencils.Api(server.URL+"/v0/", ".json")
+	client.Items = &itemService{a}
+	client.Users = &userService{a}
 }
 
 // teardown closes the test HTTP server.

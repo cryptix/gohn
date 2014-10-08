@@ -10,7 +10,7 @@ import (
 // Client exposes the different services for the HackerNews api
 type Client struct {
 	Items ItemService
-	// BUG(cryptix): add UserService
+	Users UserService
 }
 
 // NewClient returns a new api client
@@ -20,7 +20,9 @@ func NewClient(httpClient *http.Client) *Client {
 	}
 
 	c := &Client{}
-	c.Items = itemService{gopencils.Api("https://hacker-news.firebaseio.com/v0/", ".json", httpClient)}
+	api := gopencils.Api("https://hacker-news.firebaseio.com/v0/", ".json", httpClient)
+	c.Items = itemService{api}
+	c.Users = userService{api}
 
 	return c
 }

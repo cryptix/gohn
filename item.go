@@ -20,7 +20,7 @@ type Item struct {
 	Parts   []int  `json:"parts"`
 }
 
-// ItemService has all methods that the firebase api exposes
+// ItemService has all methods that the firebase api exposes for items
 type ItemService interface {
 	TopStoryIDs() ([]int, error)
 	MaxItemID() (int, error)
