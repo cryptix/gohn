@@ -9,6 +9,4 @@ It uses [bndr/gopencils](https://github.com/bndr/gopencils) for the http communi
 
 
 ## TODO
-- [] Users api
-- [] Convert `time int` fields to `time time.Time`
-- [] Add `TopStories()` which iterates over `TopStoryIDs()` to get the full storeis
+See [issue #1](https://github.com/cryptix/gohn/issues/1).
