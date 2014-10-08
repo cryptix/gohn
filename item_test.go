@@ -36,6 +36,83 @@ func TestItemService_TopStoryIDs(t *testing.T) {
 	}
 }
 
+func TestItemService_TopStories(t *testing.T) {
+	setup()
+	defer teardown()
+
+	want := []*Item{
+		&Item{
+			By:    "testUser",
+			ID:    23,
+			Kids:  []int{},
+			Score: 1,
+			Time:  encodedTime.NewUnix(1),
+			Title: "Wierd test story #1",
+			Type:  "story",
+			URL:   "http://www.testurl.fake/1",
+		},
+		&Item{
+			By:    "testUser",
+			ID:    24,
+			Kids:  []int{},
+			Score: 2,
+			Time:  encodedTime.NewUnix(2),
+			Title: "Wierd test story #2",
+			Type:  "story",
+			URL:   "http://www.testurl.fake/2",
+		},
+		&Item{
+			By:    "testUser",
+			ID:    128,
+			Kids:  []int{},
+			Score: 3,
+			Time:  encodedTime.NewUnix(3),
+			Title: "Wierd test story #3",
+			Type:  "story",
+			URL:   "http://www.testurl.fake/3",
+		},
+	}
+
+	called := 0
+	mux.HandleFunc("/v0/topstories.json", func(w http.ResponseWriter, r *http.Request) {
+		called += 1
+		testMethod(t, r, "GET")
+		writeJSON(w, []int{23, 42, 128})
+	})
+
+	mux.HandleFunc("/v0/item/23.json", func(w http.ResponseWriter, r *http.Request) {
+		called += 1
+		testMethod(t, r, "GET")
+		writeJSON(w, want[0])
+	})
+
+	mux.HandleFunc("/v0/item/42.json", func(w http.ResponseWriter, r *http.Request) {
+		called += 1
+		testMethod(t, r, "GET")
+		writeJSON(w, want[1])
+	})
+
+	mux.HandleFunc("/v0/item/128.json", func(w http.ResponseWriter, r *http.Request) {
+		called += 1
+		testMethod(t, r, "GET")
+		writeJSON(w, want[2])
+	})
+
+	stories, err := client.Items.TopStories()
+	if err != nil {
+		t.Errorf("Items.TopStoryIDs returned error: %v", err)
+	}
+
+	if called != 4 {
+		t.Fatalf("called != 4. got %d", called)
+	}
+
+	if !reflect.DeepEqual(stories, want) {
+		t.Errorf("Items.TopStoryIDs returned %+v, want %+v", stories, want)
+	}
+
+}
+
 func TestItemService_MaxItemID(t *testing.T) {
 	setup()
 	defer teardown()

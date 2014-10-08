@@ -26,6 +26,7 @@ type Item struct {
 // ItemService has all methods that the firebase api exposes for items
 type ItemService interface {
 	TopStoryIDs() ([]int, error)
+	TopStories() ([]*Item, error)
 	MaxItemID() (int, error)
 	Item(int) (*Item, error)
 }
@@ -36,6 +37,26 @@ type itemService struct {
 
 func (i itemService) TopStoryIDs() (ids []int, err error) {
 	_, err = i.api.Res("topstories", &ids).Get()
+	return
+}
+
+func (i itemService) TopStories() (items []*Item, err error) {
+	var ids []int
+	_, err = i.api.Res("topstories", &ids).Get()
+	if err != nil {
+		return nil, err
+	}
+
+	items = make([]*Item, len(ids))
+	for idx, id := range ids {
+		item, err := i.Item(id)
+		if err != nil {
+			return nil, err
+		}
+
+		items[idx] = item
+	}
+
 	return
 }
 
