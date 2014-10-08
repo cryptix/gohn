@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/cryptix/encodedTime"
 )
 
 func TestUserService_Get(t *testing.T) {
@@ -12,7 +14,7 @@ func TestUserService_Get(t *testing.T) {
 
 	want := &User{
 		About:     "This is a test",
-		Created:   1173923446,
+		Created:   encodedTime.NewUnix(1173923446),
 		Delay:     0,
 		ID:        "jl",
 		Karma:     2937,

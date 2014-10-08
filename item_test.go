@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/cryptix/encodedTime"
 )
 
 func TestItemService_TopStoryIDs(t *testing.T) {
@@ -71,7 +73,7 @@ func TestItemService_ItemStory(t *testing.T) {
 		ID:    8863,
 		Kids:  []int{8952, 9224, 8917, 8884, 8887, 8943, 8869, 8958, 9005, 9671, 8940, 9067, 8908, 9055, 8865, 8881, 8872, 8873, 8955, 10403, 8903, 8928, 9125, 8998, 8901, 8902, 8907, 8894, 8878, 8870, 8980, 8934, 8876},
 		Score: 111,
-		Time:  1175714200,
+		Time:  encodedTime.NewUnix(1175714200),
 		Title: "My YC app: Dropbox - Throw away your USB drive",
 		Type:  "story",
 		URL:   "http://www.getdropbox.com/u/2/screencast.html",
@@ -109,7 +111,7 @@ func TestItemService_ItemComment(t *testing.T) {
 		Kids:   []int{2922097, 2922429, 2924562, 2922709, 2922573, 2922140, 2922141},
 		Parent: 2921506,
 		Text:   "Aw shucks, guys ... you make me blush with your compliments.<p>Tell you what, Ill make a deal: I'll keep writing if you keep reading. K?",
-		Time:   1314211127,
+		Time:   encodedTime.NewUnix(1314211127),
 		Type:   "comment",
 	}
 
@@ -146,7 +148,7 @@ func TestItemService_ItemPoll(t *testing.T) {
 		Parts: []int{126810, 126811, 126812},
 		Score: 46,
 		Text:  "",
-		Time:  1204403652,
+		Time:  encodedTime.NewUnix(1204403652),
 		Title: "Poll: What would happen if News.YC had explicit support for polls?",
 		Type:  "poll",
 	}
@@ -183,7 +185,7 @@ func TestItemService_ItemPollOpt(t *testing.T) {
 		Parent: 160704,
 		Score:  335,
 		Text:   "Yes, ban them; I'm tired of seeing Valleywag stories on News.YC.",
-		Time:   1207886576,
+		Time:   encodedTime.NewUnix(1207886576),
 		Type:   "pollopt",
 	}
 

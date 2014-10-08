@@ -1,23 +1,26 @@
 package gohn
 
-import "github.com/bndr/gopencils"
+import (
+	"github.com/bndr/gopencils"
+	"github.com/cryptix/encodedTime"
+)
 
 // Item represents a Story, Comments, Job, 'Ask HN' or a Poll
 // see https://github.com/HackerNews/API#items for more
 type Item struct {
-	ID      int    `json:"id"`
-	Deleted bool   `json:"deleted"`
-	Type    string `json:"type"`
-	By      string `json:"by"`
-	Time    int    `json:"time"`
-	Text    string `json:"text"`
-	Dead    bool   `json:"dead"`
-	Parent  int    `json:"parent"`
-	Kids    []int  `json:"kids"`
-	URL     string `json:"url"`
-	Score   int    `json:"score"`
-	Title   string `json:"title"`
-	Parts   []int  `json:"parts"`
+	ID      int              `json:"id"`
+	Deleted bool             `json:"deleted"`
+	Type    string           `json:"type"`
+	By      string           `json:"by"`
+	Time    encodedTime.Unix `json:"time"`
+	Text    string           `json:"text"`
+	Dead    bool             `json:"dead"`
+	Parent  int              `json:"parent"`
+	Kids    []int            `json:"kids"`
+	URL     string           `json:"url"`
+	Score   int              `json:"score"`
+	Title   string           `json:"title"`
+	Parts   []int            `json:"parts"`
 }
 
 // ItemService has all methods that the firebase api exposes for items
