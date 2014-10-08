@@ -1,3 +1,4 @@
+// Package gohn implements a client for the Hacker News REST API from firebaseio
 package gohn
 
 import (
@@ -6,11 +7,13 @@ import (
 	"github.com/bndr/gopencils"
 )
 
+// Client exposes the different services for the HackerNews api
 type Client struct {
 	Items ItemService
-	// Users UserService
+	// BUG(cryptix): add UserService
 }
 
+// NewClient returns a new api client
 func NewClient(httpClient *http.Client) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
