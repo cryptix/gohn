@@ -8,6 +8,7 @@ import (
 
 	"github.com/andlabs/ui"
 	"github.com/cryptix/gohn"
+	"github.com/skratchdot/open-golang/open"
 )
 
 type displayItem struct {
@@ -30,6 +31,15 @@ func main() {
 		status = ui.NewStandaloneLabel("")
 
 		table := ui.NewTable(reflect.TypeOf(displayItem{}))
+		table.OnSelected(func() {
+			idx := table.Selected()
+			if idx >= 0 {
+				table.RLock()
+				td := table.Data().(*[]displayItem)
+				open.Start((*td)[idx].URL)
+				table.RUnlock()
+			}
+		})
 
 		go func() {
 			newItem = make(chan *displayItem)
