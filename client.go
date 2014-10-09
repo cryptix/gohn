@@ -20,7 +20,7 @@ func NewClient(httpClient *http.Client) *Client {
 	}
 
 	c := &Client{}
-	api := gopencils.Api("https://hacker-news.firebaseio.com/v0/", ".json", httpClient)
+	api := gopencils.Api("https://hacker-news.firebaseio.com/v0", ".json", httpClient)
 	c.Items = itemService{api}
 	c.Users = userService{api}
 
