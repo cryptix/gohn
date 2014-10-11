@@ -8,3 +8,5 @@ go:
 install:
   - go get github.com/bndr/gopencils
   - go get github.com/cryptix/encodedTime
+
+script: go test -v github.com/cryptix/gohn
