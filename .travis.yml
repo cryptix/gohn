@@ -2,5 +2,9 @@ language: go
 
 go:
   - 1.2
-  - 1.3
+  - release
   - tip
+
+install:
+  - go get github.com/bndr/gopencils
+  - go get github.com/cryptix/encodedTime
