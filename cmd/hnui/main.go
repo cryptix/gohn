@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
-	"time"
 
 	"github.com/andlabs/ui"
 	"github.com/cryptix/gohn"
@@ -31,6 +30,8 @@ func main() {
 		status = ui.NewStandaloneLabel("")
 
 		table := ui.NewTable(reflect.TypeOf(displayItem{}))
+
+		// on click > open url of selected item
 		table.OnSelected(func() {
 			idx := table.Selected()
 			if idx >= 0 {
@@ -41,6 +42,7 @@ func main() {
 			}
 		})
 
+		// iterates over chan and updates items in the table
 		go func() {
 			newItem = make(chan *displayItem)
 
@@ -51,7 +53,6 @@ func main() {
 
 			for item := range newItem {
 				status.SetText(fmt.Sprintf("got item %d", item.Idx))
-				time.Sleep(30 * time.Millisecond)
 				table.Lock()
 				td := table.Data().(*[]displayItem)
 				(*td)[item.Idx] = *item
@@ -59,6 +60,7 @@ func main() {
 			}
 		}()
 
+		// construct main view stack
 		stack := ui.NewVerticalStack(
 			reload,
 			status,
@@ -89,12 +91,15 @@ func main() {
 
 func updateItems(ichan chan<- *displayItem) {
 	status.SetText("Update started...")
+
+	// get the current top IDs
 	ids, err := hn.Items.TopStoryIDs()
 	if err != nil {
 		status.SetText(fmt.Sprint("TopStoryIDs() Err: ", err.Error()))
 		return
 	}
 
+	// start a go routine for each ID and push them to the displayItem channel
 	var wg sync.WaitGroup
 	for idx, id := range ids {
 		wg.Add(1)
@@ -109,6 +114,7 @@ func updateItem(wg *sync.WaitGroup, ichan chan<- *displayItem, i, id int) {
 	defer wg.Done()
 
 	item, err := hn.Items.Item(id)
+	// try again if it fails (EOF, timeout, ...)
 	if err != nil {
 		fmt.Println("Items() Err:", err)
 		ichan <- &displayItem{
@@ -118,7 +124,6 @@ func updateItem(wg *sync.WaitGroup, ichan chan<- *displayItem, i, id int) {
 			Text:  err.Error(),
 		}
 
-		// reload beachballs
 		wg.Add(1)
 		go updateItem(wg, ichan, i, id)
 		return
