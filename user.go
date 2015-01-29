@@ -2,7 +2,7 @@ package gohn
 
 import (
 	"github.com/bndr/gopencils"
-	"github.com/cryptix/encodedTime"
+	"github.com/cryptix/go/encodedTime"
 )
 
 // User is a user of HN

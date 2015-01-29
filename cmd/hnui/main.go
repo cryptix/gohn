@@ -27,7 +27,7 @@ func main() {
 
 	go ui.Do(func() {
 		reload := ui.NewButton("Reload")
-		status = ui.NewStandaloneLabel("")
+		status = ui.NewLabel("")
 
 		table := ui.NewTable(reflect.TypeOf(displayItem{}))
 

@@ -2,7 +2,7 @@ package gohn
 
 import (
 	"github.com/bndr/gopencils"
-	"github.com/cryptix/encodedTime"
+	"github.com/cryptix/go/encodedTime"
 )
 
 // Item represents a Story, Comments, Job, 'Ask HN' or a Poll
