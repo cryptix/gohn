@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/cryptix/encodedTime"
+	"github.com/cryptix/go/encodedTime"
 )
 
 func TestItemService_TopStoryIDs(t *testing.T) {
